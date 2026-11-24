@@ -1,0 +1,22 @@
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css">
+<title>Pip Uploader · TikTok</title>
+<style>#code{width:100%;font:15px/1.4 ui-monospace,monospace;padding:12px;border-radius:10px;border:1px solid var(--muted);background:var(--bg);color:var(--text);word-break:break-all;min-height:90px}
+button{margin-top:12px;font:600 16px system-ui;padding:12px 18px;border-radius:10px;border:0;background:var(--yellow);color:#1d1533;cursor:pointer}</style></head>
+<body><div class="wrap"><nav><a class="brand" href="index.html">PIP SCIENCE</a></nav>
+<h1>TikTok connected?</h1>
+<div class="card" id="ok" hidden><p>Copy this code and paste it into the server console (<code>shorts auth tiktok</code>).
+<br><span class="muted">Salin kode ini lalu tempel di konsol VPS. Kode berlaku beberapa menit saja.</span></p>
+<textarea id="code" readonly></textarea><button id="copy">Copy / Salin</button><p id="done" class="muted"></p></div>
+<div class="card" id="err" hidden><p id="errmsg"></p></div>
+<p class="muted">This page only shows the code to its owner; nothing is stored or sent anywhere.</p></div>
+<script>
+const q = new URLSearchParams(location.search);
+if (q.get('code')) { document.getElementById('ok').hidden = false; document.getElementById('code').value = q.get('code'); }
+else { document.getElementById('err').hidden = false;
+  document.getElementById('errmsg').textContent = q.get('error') ? 'TikTok error: ' + q.get('error') + ' ' + (q.get('error_description') || '') : 'No code in this link. Start again from the server console.'; }
+document.getElementById('copy').onclick = async () => { const t = document.getElementById('code'); t.select();
+  try { await navigator.clipboard.writeText(t.value); } catch (e) { document.execCommand('copy'); }
+  document.getElementById('done').textContent = 'Tersalin ✓'; };
+</script></body></html>
