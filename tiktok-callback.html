@@ -13,6 +13,13 @@ button{margin-top:12px;font:600 16px system-ui;padding:12px 18px;border-radius:1
 <p class="muted">This page only shows the code to its owner; nothing is stored or sent anywhere.</p></div>
 <script>
 const q = new URLSearchParams(location.search);
+const st = q.get('state') || '';
+if (q.get('code') && st.startsWith('d.')) {          // started from the dashboard: hand the code straight back to it
+  try { const o = atob(st.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'));
+    if (/^https:\/\/[a-z0-9.-]+(:\d+)?$/i.test(o)) {
+      location.replace(o + '/tiktok/callback?code=' + encodeURIComponent(q.get('code')) + '&state=' + encodeURIComponent(st)); }
+  } catch (e) {}
+}
 if (q.get('code')) { document.getElementById('ok').hidden = false; document.getElementById('code').value = q.get('code'); }
 else { document.getElementById('err').hidden = false;
   document.getElementById('errmsg').textContent = q.get('error') ? 'TikTok error: ' + q.get('error') + ' ' + (q.get('error_description') || '') : 'No code in this link. Start again from the server console.'; }
